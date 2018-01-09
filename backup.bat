@@ -1,10 +1,9 @@
 echo off
 
-rem --- Edit the lines below to create your own backup strategy
-rem --- The /mir option has been left out for safety sake
-rem --- Add more lines for each new folder requiring backup
-rem --- Specified 4 threads to use for multi-threaded copying
-rem --- The results of the backup can be found in my_backup_log.txt 
+REM --- Edit the lines below to create your own backup strategy
+REM --- Use robocopy /mir option to mirror files (deleted files in src will be deleted in dst!)
+REM --- Add more lines for each new folder requiring backup
+rem --- The results of the backup can be found in txt log file
 
 for /f %%D in ('wmic volume get DriveLetter^, Label ^| find "Backup"') do set ext_drive_backup_letter=%%D
 for /f %%D in ('wmic volume get DriveLetter^, Label ^| find "Laptop-Extern"') do set ext_drive_chris_letter=%%D
