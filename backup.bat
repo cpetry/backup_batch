@@ -8,7 +8,7 @@ rem --- The results of the backup can be found in txt log file
 
 REM Read in parameters
 REM -----------------
-SET ext_src_drivelabel[0]=FotoBox
+SET ext_src_drivelabel[0]=Fotobox
 SET ext_src_path[0]=_Fotos
 SET ext_src_drivelabel[1]=Laptop-Extern
 SET ext_src_path[1]=Eigene Dateien
@@ -30,7 +30,7 @@ for /f %%D in ('wmic volume get DriveLetter^, Label ^| find "%ext_dst_drivelabel
 )
 
 
-SET exclude_files="'*.MOV'"
+SET exclude_files="*.MOV"
 
 REM Execute robocopy
 REM ----------------
