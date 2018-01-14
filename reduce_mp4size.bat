@@ -4,14 +4,27 @@ REM This script encodes *.mov and *.mp4 to mp4 with preset fast 1080p30.
 REM Should be a good solution to reduce size of movies created by digital cameras
 REM You need HandBrakeCLI for that.
 
-FOR /F "tokens=*" %%G IN ('DIR /B /S *.MOV *.MP4 ^|FINDSTR /V /I "_min.mp4"') DO (
-	IF NOT EXIST "%%G"_min.mp4 (
-		ECHO %%G encoding...
-	 	"HandBrakeCLI" -i "%%G" -o "%%G"_min.mp4 --preset="Fast 1080p30" >nul 2>&1
-	 	ECHO|set /p="Done!"
+SETLOCAL EnableDelayedExpansion
+
+set src=F:\Test
+set dst=G:\RoboBackup\Test
+
+set ext=*.MOV *.MP4 *.AVI
+
+FOR /R %src% %%G IN (%ext%) DO (
+	SET dstPath=%%~dG%%~pG
+	SET dstPath=!dstPath:%src%=%dst%!
+	IF NOT EXIST "!dstPath!%%~nG_min.mp4" (
+		REM create folder path if it doesnt exist
+		if not exist "!dstPath!" mkdir !dstPath!
+
+		ECHO Encoding %%G to !dstPath!%%~nG_min.mp4
+		HandBrakeCLI -i "%%G" -o "!dstPath!%%~nG_min.mp4" --preset="Fast 1080p30" >nul 2>&1
 	) ELSE (
 	 	ECHO %%G was already encoded! Skipping...
 	)
 )
+
+endlocal
 
 PAUSE
