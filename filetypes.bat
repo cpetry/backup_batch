@@ -1,6 +1,6 @@
 @echo off
 REM Lists all file extensions inside 'target' folder
-set target=G:\RoboBackup\_Fotos
+set target=F:\_Fotos
 
 if "%target%"=="" set target=%cd%
 echo Searching for filetypes in "%target%"
@@ -15,7 +15,7 @@ rem Previous two lines deliberately left blank for LF to work.
 
 echo Found types:
 
-for /f "tokens=*" %%i in ('dir /b /s /a:-d "%target%"') do (
+for /f "tokens=*" %%i in ('dir /b /s /a:-d "%target%" /L') do (
     set ext=%%~xi
     if "!ext!"=="" set ext=FileWithNoExtension
     echo !extlist! | find "!ext!:" > nul

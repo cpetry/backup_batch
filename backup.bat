@@ -30,7 +30,7 @@ for /f %%D in ('wmic volume get DriveLetter^, Label ^| find "%ext_dst_drivelabel
 )
 
 
-SET exclude_files="*.MOV *.MP4 *.AVI *.db *.dat"
+SET exclude_files=*.MOV *.MP4 *.AVI *.db *.3GP *.MPG
 
 REM Execute robocopy
 REM ----------------

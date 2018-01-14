@@ -6,10 +6,12 @@ REM You need HandBrakeCLI for that.
 
 SETLOCAL EnableDelayedExpansion
 
-set src=F:\Test
-set dst=G:\RoboBackup\Test
+set src=F:\_Fotos
+set dst=G:\RoboBackup\_Fotos
 
-set ext=*.MOV *.MP4 *.AVI
+set ext=*.MOV *.MP4 *.AVI *.3GP *.MPG
+
+ECHO Encoding videos %src% to %dst% with "_min.mp4" extension
 
 FOR /R %src% %%G IN (%ext%) DO (
 	SET dstPath=%%~dG%%~pG
@@ -18,7 +20,7 @@ FOR /R %src% %%G IN (%ext%) DO (
 		REM create folder path if it doesnt exist
 		if not exist "!dstPath!" mkdir !dstPath!
 
-		ECHO Encoding %%G to !dstPath!%%~nG_min.mp4
+		ECHO Encoding %%G
 		HandBrakeCLI -i "%%G" -o "!dstPath!%%~nG_min.mp4" --preset="Fast 1080p30" >nul 2>&1
 	) ELSE (
 	 	ECHO %%G was already encoded! Skipping...
