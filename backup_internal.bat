@@ -16,6 +16,11 @@ for /f %%D in ('wmic volume get DriveLetter^, Label ^| find "%3"') DO (
 	SET ext_dst_drive=%%D
 )
 
+REM Take the last folder as dstFolder
+set str=%2
+set "dstFolder=%str:/=" & set "dstFolder=%"
+rem echo %dstFolder%´
+
 SET exclude_files=*.MOV *.MP4 *.AVI *.db *.3GP *.MPG
 
 REM Execute robocopy
@@ -23,9 +28,12 @@ REM ----------------
 IF DEFINED ext_dst_drive (
     IF DEFINED ext_src_drive (
         echo Running backup for "%ext_src_drive%/%2"!
-        robocopy "%ext_src_drive%/%2" "%ext_dst_drive%/%4/%2" /e /xf %exclude_files% /np /tee /mt:4 /r:1 /log:my_backup_log.txt
+        robocopy "%ext_src_drive%/%2" "%ext_dst_drive%/%4/%dstFolder%" /e /xf %exclude_files% /np /tee /mt:4 /r:1 /log:my_backup_log.txt
     ) ELSE (
         echo source "%ext_src_drive%/%2" is not found!
+        REM could be that source is local
+        REM Try local
+        robocopy "%2" "%ext_dst_drive%/%4/%dstFolder%" /e /xf %exclude_files% /np /tee /mt:4 /r:1 /log:my_backup_log.txt
     )
 ) ELSE (
 	echo external destination called "%ext_src_drive%/%2" is not found!
